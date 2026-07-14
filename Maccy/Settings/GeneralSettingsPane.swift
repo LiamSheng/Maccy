@@ -32,27 +32,42 @@ struct GeneralSettingsPane: View {
         )
       }
 
+      // Shortcuts and "Stay on Top" are arranged in a 2x2 grid:
+      //   Open:   [recorder]   Pin: [recorder]
+      //   Delete: [recorder]   [x] Stay on top
       Settings.Section(label: { Text("Open", tableName: "GeneralSettings") }) {
-        KeyboardShortcuts.Recorder(for: .popup, onChange: { newShortcut in
-          if newShortcut == nil {
-            // No shortcut is recorded. Remove keys monitor
-            AppState.shared.popup.deinitEventsMonitor()
-          } else {
-            // User is using shortcut. Ensure keys monitor is initialized
-            AppState.shared.popup.initEventsMonitor()
+        HStack(spacing: 15) {
+          KeyboardShortcuts.Recorder(for: .popup, onChange: { newShortcut in
+            if newShortcut == nil {
+              // No shortcut is recorded. Remove keys monitor
+              AppState.shared.popup.deinitEventsMonitor()
+            } else {
+              // User is using shortcut. Ensure keys monitor is initialized
+              AppState.shared.popup.initEventsMonitor()
+            }
+          })
+            .help(Text("OpenTooltip", tableName: "GeneralSettings"))
+
+          HStack(spacing: 5) {
+            Text("Pin", tableName: "GeneralSettings")
+            KeyboardShortcuts.Recorder(for: .pin)
+              .help(Text("PinTooltip", tableName: "GeneralSettings"))
           }
-        })
-          .help(Text("OpenTooltip", tableName: "GeneralSettings"))
+        }
       }
 
-      Settings.Section(label: { Text("Pin", tableName: "GeneralSettings") }) {
-        KeyboardShortcuts.Recorder(for: .pin)
-          .help(Text("PinTooltip", tableName: "GeneralSettings"))
-      }
       Settings.Section(label: { Text("Delete", tableName: "GeneralSettings") }
       ) {
-        KeyboardShortcuts.Recorder(for: .delete)
-          .help(Text("DeleteTooltip", tableName: "GeneralSettings"))
+        HStack(spacing: 15) {
+          KeyboardShortcuts.Recorder(for: .delete)
+            .help(Text("DeleteTooltip", tableName: "GeneralSettings"))
+
+          Defaults.Toggle(key: .stayOnTop) {
+            Text("StayOnTop", tableName: "GeneralSettings")
+          }
+          .help(Text("StayOnTopTooltip", tableName: "GeneralSettings"))
+          .fixedSize()
+        }
       }
       Settings.Section(
         bottomDivider: true,

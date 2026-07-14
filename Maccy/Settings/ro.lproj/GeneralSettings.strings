@@ -21,3 +21,6 @@
 "Behavior" = "Comportament:";
 "Delete" = "Șterge:";
 "Title" = "General";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

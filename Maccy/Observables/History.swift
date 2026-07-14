@@ -25,7 +25,13 @@ class History: ItemsContainer { // swiftlint:disable:this type_body_length
         updateItems(search.search(string: searchQuery, within: all))
 
         if searchQuery.isEmpty {
-          AppState.shared.navigator.select(item: unpinnedItems.first)
+          if Defaults[.compactMode] {
+            // In compact mode clearing the search hides all items,
+            // so drop the selection to avoid acting on invisible items.
+            AppState.shared.navigator.select(item: nil)
+          } else {
+            AppState.shared.navigator.select(item: unpinnedItems.first)
+          }
         } else {
           AppState.shared.navigator.highlightFirst()
         }

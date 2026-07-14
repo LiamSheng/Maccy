@@ -7,8 +7,14 @@ struct FooterView: View {
   @Environment(AppState.self) private var appState
   @Environment(ModifierFlags.self) private var modifierFlags
   @Default(.showFooter) private var showFooter
+  @Default(.compactMode) private var compactMode
   @State private var clearOpacity: Double = 1
   @State private var clearAllOpacity: Double = 0
+
+  // Hide the footer together with the items in compact mode
+  private var footerVisible: Bool {
+    showFooter && !(compactMode && appState.history.searchQuery.isEmpty)
+  }
 
   var clearAllModifiersPressed: Bool {
     let clearModifiers = footer.items[0].shortcuts.first?.modifierFlags ?? []
@@ -54,9 +60,9 @@ struct FooterView: View {
         FooterItemView(item: item)
       }
     }
-    .opacity(showFooter ? 1 : 0)
-    .frame(maxHeight: showFooter ? nil : 0)
-    .padding(.bottom, showFooter ? Popup.verticalPadding : 0)
+    .opacity(footerVisible ? 1 : 0)
+    .frame(maxHeight: footerVisible ? nil : 0)
+    .padding(.bottom, footerVisible ? Popup.verticalPadding : 0)
     .readHeight(appState, into: \.popup.footerHeight)
   }
 }

@@ -20,3 +20,6 @@
 "Regex" = "வழக்கமான வெளிப்பாடுகள்";
 "Mixed" = "கலப்பு";
 "NotificationsAndSounds" = "அறிவிப்புகள் மற்றும் ஒலிகள்";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

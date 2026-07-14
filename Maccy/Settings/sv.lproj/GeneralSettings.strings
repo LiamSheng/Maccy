@@ -21,3 +21,6 @@
 "PinTooltip" = "Kortkommando för att fästa historikpost .\nFörval: ⌥P.";
 "Modifiers" = "Anpassa beteendet vid val av post:\n• Välj med %@ nedtryckt för att kopiera posten.\n• Välj med %@ nedtryckt för att kopiera och klistra in posten.\n• Välj med %@ nedtryckt för att kopiera, rensa formatering och klistra in posten.";
 "Regex" = "Reguljära uttryck";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

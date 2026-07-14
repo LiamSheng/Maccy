@@ -12,6 +12,12 @@ struct StorageType {
 
 extension Defaults.Keys {
   static let clearOnQuit = Key<Bool>("clearOnQuit", default: false)
+  // When enabled, the popup stays visible on top of other windows
+  // even after it loses focus (similar to Ditto on Windows).
+  static let stayOnTop = Key<Bool>("stayOnTop", default: false)
+  // When enabled, the popup only shows the search field and hides all
+  // history items until a search query is entered.
+  static let compactMode = Key<Bool>("compactMode", default: false)
   static let clearSystemClipboard = Key<Bool>("clearSystemClipboard", default: false)
   static let clipboardCheckInterval = Key<Double>("clipboardCheckInterval", default: 0.5)
   static let enabledPasteboardTypes = Key<Set<NSPasteboard.PasteboardType>>(

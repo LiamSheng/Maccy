@@ -20,3 +20,6 @@
 "Regex" = "正则表达式";
 "Mixed" = "混合";
 "NotificationsAndSounds" = "通知和声音 􀱁";
+
+"StayOnTop" = "置顶显示";
+"StayOnTopTooltip" = "让剪贴板窗口保持置顶显示，失去焦点时也不会自动关闭。";

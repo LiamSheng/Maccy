@@ -20,3 +20,6 @@
 "Regex" = "正規表現";
 "Mixed" = "混合";
 "NotificationsAndSounds" = "通知と音 􀱁";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

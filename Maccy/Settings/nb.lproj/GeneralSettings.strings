@@ -20,3 +20,6 @@
 "Regex" = "Vanlig uttrykk";
 "Mixed" = "Blandet";
 "NotificationsAndSounds" = "Varsler og lyder 􀱁";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

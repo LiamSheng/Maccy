@@ -23,7 +23,9 @@ struct ListHeaderView: View {
         .focused($searchFocused)
         .frame(maxWidth: .infinity)
         .onChange(of: scenePhase) {
-          if scenePhase == .background && !searchQuery.isEmpty {
+          // With "Stay on Top" the panel remains visible after losing focus,
+          // so keep the current search query instead of resetting it.
+          if scenePhase == .background && !searchQuery.isEmpty && !Defaults[.stayOnTop] {
             searchQuery = ""
           }
         }

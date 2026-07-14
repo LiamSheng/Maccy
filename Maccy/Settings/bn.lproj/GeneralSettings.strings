@@ -21,3 +21,6 @@
 "ShowPreviewTooltip" = "অতিরিক্ত তথ্য সহ পূর্বরূপ দেখান।\nডিফল্ট: ⌃Space।";
 "Behavior" = "আচরণ:";
 "Modifiers" = "আইটেম নির্বাচন করার সময় আচরণটি কাস্টমাইজ করুন:\n• আইটেমটি কপি করতে %@ টিপে নির্বাচন করুন।\n• আইটেমটি কপি এবং পেস্ট করতে %@ টিপে নির্বাচন করুন।\n• কপি করতে %@ টিপে নির্বাচন করুন, ফর্ম্যাটিং সাফ করুন এবং আইটেমটি পেস্ট করুন।";
+
+"StayOnTop" = "Stay on top";
+"StayOnTopTooltip" = "Keep the popup window visible on top of other windows even when it loses focus.";

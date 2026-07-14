@@ -7,8 +7,15 @@ struct HeaderView: View {
   let controller: SlideoutController
   @FocusState.Binding var searchFocused: Bool
 
+  @Default(.compactMode) private var compactMode
+
   var previewPlacement: SlideoutPlacement {
     return controller.placement
+  }
+
+  // In compact mode items are hidden unless a search query is entered
+  private var itemsHidden: Bool {
+    compactMode && appState.history.searchQuery.isEmpty
   }
 
   var body: some View {
@@ -34,6 +41,26 @@ struct HeaderView: View {
           tableName: "PreviewItemView",
           replacementKey: "previewKey"
         )
+        .padding(.trailing, Popup.horizontalPadding)
+
+        // Compact mode toggle: ">" means items are hidden, "v" means expanded
+        ToolbarButton {
+          compactMode.toggle()
+          if appState.history.searchQuery.isEmpty {
+            if compactMode {
+              // Drop the selection so the preview doesn't auto-open
+              appState.navigator.select(item: nil)
+            } else {
+              appState.navigator.select(
+                item: appState.history.unpinnedItems.first ?? appState.history.pinnedItems.first
+              )
+            }
+          }
+          appState.popup.needsResize = true
+        } label: {
+          Image(systemName: itemsHidden ? "chevron.right" : "chevron.down")
+        }
+        .help(Text(verbatim: itemsHidden ? "Show history items" : "Hide items unless searching"))
         .padding(.trailing, Popup.horizontalPadding)
       }
       .opacity(appState.searchVisible ? 1 : 0)

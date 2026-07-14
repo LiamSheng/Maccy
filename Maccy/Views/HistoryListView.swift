@@ -12,12 +12,18 @@ struct HistoryListView: View {
   @Default(.pinTo) private var pinTo
   @Default(.previewDelay) private var previewDelay
   @Default(.showFooter) private var showFooter
+  @Default(.compactMode) private var compactMode
+
+  // In compact mode all items are hidden until a search query is entered
+  private var itemsHidden: Bool {
+    compactMode && searchQuery.isEmpty
+  }
 
   private var pinnedItems: [HistoryItemDecorator] {
-    appState.history.pinnedItems.filter(\.isVisible)
+    itemsHidden ? [] : appState.history.pinnedItems.filter(\.isVisible)
   }
   private var unpinnedItems: [HistoryItemDecorator] {
-    appState.history.unpinnedItems.filter(\.isVisible)
+    itemsHidden ? [] : appState.history.unpinnedItems.filter(\.isVisible)
   }
   private var showPinsSeparator: Bool {
     pinsVisible && !unpinnedItems.isEmpty
@@ -28,7 +34,8 @@ struct HistoryListView: View {
   }
 
   private var pasteStackVisible: Bool {
-    if let stack = appState.history.pasteStack,
+    if !itemsHidden,
+       let stack = appState.history.pasteStack,
        !stack.items.isEmpty {
       return true
     }
@@ -70,11 +77,15 @@ struct HistoryListView: View {
     let bottomPinsVisible = pinTo == .bottom && pinsVisible
     let topSeparatorVisible = topPinsVisible || pasteStackVisible
     let bottomSeparatorVisible = bottomPinsVisible
-    let scrollTopPadding = topSeparatorVisible ? Popup.verticalSeparatorPadding : topPadding
-    let scrollBottomPadding = bottomSeparatorVisible ? Popup.verticalSeparatorPadding : bottomPadding
+    // Collapse the scroll paddings when items are hidden in compact mode
+    let scrollTopPadding = itemsHidden
+      ? 0 : (topSeparatorVisible ? Popup.verticalSeparatorPadding : topPadding)
+    let scrollBottomPadding = itemsHidden
+      ? 0 : (bottomSeparatorVisible ? Popup.verticalSeparatorPadding : bottomPadding)
 
     VStack(spacing: 0) {
-      if let stack = appState.history.pasteStack,
+      if pasteStackVisible,
+         let stack = appState.history.pasteStack,
          !stack.items.isEmpty {
         PasteStackView(stack: stack)
 
@@ -116,10 +127,14 @@ struct HistoryListView: View {
           if scenePhase == .active {
             searchFocused = true
             appState.navigator.isKeyboardNavigating = true
-            appState.navigator.select(item: appState.history.unpinnedItems.first ?? appState.history.pinnedItems.first)
-            appState.preview.enableAutoOpen()
-            appState.preview.resetAutoOpenSuppression()
-            appState.preview.startAutoOpen()
+            // Skip selection while items are hidden in compact mode,
+            // otherwise the preview may auto-open for an invisible item.
+            if !itemsHidden {
+              appState.navigator.select(item: appState.history.unpinnedItems.first ?? appState.history.pinnedItems.first)
+              appState.preview.enableAutoOpen()
+              appState.preview.resetAutoOpenSuppression()
+              appState.preview.startAutoOpen()
+            }
           } else {
             modifierFlags.flags = []
             appState.navigator.isKeyboardNavigating = true

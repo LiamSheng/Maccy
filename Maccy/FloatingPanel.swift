@@ -193,7 +193,9 @@ class FloatingPanel<Content: View>: NSPanel, NSWindowDelegate {
   override func resignKey() {
     super.resignKey()
     // Don't hide if confirmation is shown.
-    if NSApp.alertWindow == nil {
+    // Also keep the panel open when "Stay on Top" is enabled;
+    // it can still be closed explicitly (Esc, shortcut, or item selection).
+    if NSApp.alertWindow == nil && !Defaults[.stayOnTop] {
       close()
     }
   }

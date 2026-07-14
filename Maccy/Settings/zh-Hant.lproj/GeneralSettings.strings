@@ -20,3 +20,6 @@
 "Regex" = "正規表示式";
 "Mixed" = "混合";
 "NotificationsAndSounds" = "通知和聲音 􀱁";
+
+"StayOnTop" = "置頂顯示";
+"StayOnTopTooltip" = "讓剪貼簿視窗保持置頂顯示，失去焦點時也不會自動關閉。";
